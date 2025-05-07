@@ -153,7 +153,100 @@
 	<b>Organizer:</b> Cache design Challenge in high-speed networks @ NSDI 2026<br>
 </li>
 	<p style="margin-top:1px"></p>		
-
+<h2 id="hobby-trigger" style="cursor: pointer; margin-top:20px;">Personal Hobbies Click-Here▼</h2>
+<div id="hobby-output" style="display:none; background:#f8f9fa; padding:15px; border-radius:5px;"></div>
+<style>
+    /* 打字机效果专用样式 */
+    .typing-cursor {
+        display: inline-block;
+        width: 3px;
+        height: 1em;
+        background: #2B5C84;
+        vertical-align: middle;
+        animation: cursor-blink 1s infinite;
+    }
+    
+    @keyframes cursor-blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+    
+    .typing-char {
+        opacity: 0;
+        animation: char-appear 0.1s forwards;
+    }
+    
+    @keyframes char-appear {
+        to { opacity: 1; }
+    }
+    </style>
+    
+    <script>
+    // 修正后的打字机逻辑
+    const hobbyConfig = {
+        content: "Beyond academics, I actively pursue:\n\n" +
+                 "• 水上运动：Competitive swimming (200m freestyle PB: 2:45)\n" +
+                 "• 机械改装：Arduino-based RC boat customization\n" +
+                 "• 专业阅读：Regularly review《Marine Engineering》《Naval Architects》\n" +
+                 "• 志愿服务：Weekly tutor at community STEM workshop\n\n" +
+                 "These activities enhance my... ",
+        speed: 35,
+        variance: 15,
+        newlineDelay: 200
+    };
+    
+    let isTyping = false;
+    let currentPos = 0;
+    
+    function startHobbyTyping() {
+        if(isTyping) return;
+        
+        const output = document.getElementById('hobby-output');
+        output.style.display = 'block';
+        output.innerHTML = '<span class="typing-cursor"></span>';
+        isTyping = true;
+        currentPos = 0;
+        typeNextCharacter();
+    }
+    
+    function typeNextCharacter() {
+        const output = document.getElementById('hobby-output');
+        
+        if(currentPos < hobbyConfig.content.length) {
+            const char = hobbyConfig.content.charAt(currentPos);
+            
+            if(char === '\n') {
+                output.appendChild(document.createElement('br'));
+                setTimeout(typeNextCharacter, hobbyConfig.newlineDelay);
+            } else {
+                const span = document.createElement('span');
+                span.className = 'typing-char';
+                span.textContent = char;
+                output.appendChild(span);
+                
+                // 修正setTimeout调用方式
+                const delay = hobbyConfig.speed + Math.random() * hobbyConfig.variance;
+                setTimeout(typeNextCharacter, delay);
+            }
+            
+            output.scrollTop = output.scrollHeight; // 自动滚动
+            currentPos++;
+        } else {
+            const cursor = output.querySelector('.typing-cursor');
+            if(cursor) cursor.remove();
+            isTyping = false;
+        }
+    }
+    
+    // 绑定点击事件
+    document.getElementById('hobby-trigger').addEventListener('click', function() {
+        this.style.color = '#1A365F';
+        if(!this.classList.contains('active')) {
+            startHobbyTyping();
+            this.classList.add('active');
+        }
+    });
+    </script>
 
 <!-- <li>
 <b>Journal Reviews:</b>
